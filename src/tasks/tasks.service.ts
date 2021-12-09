@@ -15,7 +15,7 @@ constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {
     private tasks = []
 
     async getAllTitles(): Promise<Task[]>{
-        return this.taskModel.find().exec()
+        return this.taskModel.find({}, {body: 0, __v:0 }).exec()
     }
 
     async getTask(id: string): Promise<Task> {
