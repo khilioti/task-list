@@ -1,11 +1,13 @@
 import {
     Body,
+    CacheInterceptor,
     Controller,
     Delete,
     Get,
     Param,
     Post,
     Put,
+    UseInterceptors,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -19,11 +21,13 @@ export class TasksController {
     constructor(private readonly taskService: TasksService) {}
 
     @Get()
+    @UseInterceptors(CacheInterceptor)
     getAllTitles(): Promise<Task[]> {
         return this.taskService.getAllTitles()
     }
 
     @Get(':id')
+   // @UseInterceptors(CacheInterceptor) // auto cache
     getTask(@Param('id') id: string): Promise<Task> {
         return this.taskService.getTask(id)
     }
