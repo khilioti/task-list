@@ -22,7 +22,6 @@ export class TasksService {
   async getTask(id: string): Promise<Task> {
 
     let task: Task = await this.cacheManager.get(id);
-    console.log(task);
 
     if (!task) {
       task = await this.taskModel.findById(id)
@@ -30,7 +29,7 @@ export class TasksService {
       if (!task) {
         throw new HttpException('Task with this id not found', HttpStatus.NOT_FOUND)
       }
-      
+
       await this.cacheManager.set(id, task, { ttl: 120 });
     }
     return task
